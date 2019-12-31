@@ -74,13 +74,8 @@ router.beforeEach((to, from, next) => {
     // 去掉/之后第一个字母
     let key = to.path.substr(1, 1);
     let pathArray = storeSelf.state.user.privilegeRouterPathMap.get(key);
-    if (!(pathArray && pathArray.indexOf(to.path) >= 0)) {
-      next({
-        name: 'Error401'
-      });
-    } else {
-      next();
-    }
+
+    next();
   }
 });
 

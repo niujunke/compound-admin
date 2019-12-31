@@ -55,7 +55,6 @@
             style="margin-right: 10px;"
             v-if="$config.useI18n"
           />
-          <Notice />
           <Fullscreen style="margin-right: 10px;" v-model="isFullscreen" />
         </HeaderBar>
       </Header>
@@ -110,7 +109,7 @@ export default {
     User,
     ABackTop
   },
-  data() {
+  data () {
     return {
       // 是否折叠
       collapsed: false,
@@ -128,48 +127,48 @@ export default {
   },
   computed: {
     ...mapGetters(['errorCount', 'userMenuPrivilege']),
-    tagNavList() {
+    tagNavList () {
       return this.$store.state.app.tagNavList;
     },
-    tagRouter() {
+    tagRouter () {
       return this.$store.state.app.tagRouter;
     },
-    keepAliveIncludes() {
+    keepAliveIncludes () {
       return this.$store.state.app.keepAliveIncludes;
     },
-    cacheList() {
+    cacheList () {
       const list = [
         'ParentView',
         ...(this.tagNavList.length
           ? this.tagNavList
-              .filter(item => !(item.meta && item.meta.noKeepAlive))
-              .map(item => item.name)
+            .filter(item => !(item.meta && item.meta.noKeepAlive))
+            .map(item => item.name)
           : [])
       ];
       return list;
     },
-    local() {
+    local () {
       return this.$store.state.app.local;
     },
-    hasReadErrorPage() {
+    hasReadErrorPage () {
       return this.$store.state.app.hasReadErrorPage;
     },
-    unreadCount() {
+    unreadCount () {
       return this.$store.state.user.unreadCount;
     },
-    key() {
+    key () {
       return this.$route.name;
     }
   },
   watch: {
-    searchKeyWord(val) {
+    searchKeyWord (val) {
       if (val) {
         this.searchListResult = this.searchList.filter(
           item => item.title.indexOf(val) >= 0
         );
       }
     },
-    $route(newRoute) {
+    $route (newRoute) {
       const { name, query, params, meta } = newRoute;
       this.addTag({
         route: {
@@ -190,17 +189,17 @@ export default {
       let isQueryNoKeepAlive = query && query.noKeepAlive === true;
       // 如果router meta 存在 noKeepAlive
       let isMetaNoKeepAlive = meta && meta.noKeepAlive === true;
-      //如果存在noKeepAlive且已经缓存了，需要去掉
+      // 如果存在noKeepAlive且已经缓存了，需要去掉
       if (isParamNoKeepAlive || isMetaNoKeepAlive || isQueryNoKeepAlive) {
         // 去掉keep-alive
         this.deleteKeepAliveIncludes(name);
         return;
       }
-      //默认缓存住所有
+      // 默认缓存住所有
       this.pushKeepAliveIncludes(name);
     }
   },
-  mounted() {
+  mounted () {
     /**
      * @description 初始化设置面包屑导航和标签导航
      */
@@ -208,7 +207,7 @@ export default {
     this.setHomeRoute(routers);
     this.setCollapsed();
     this.setBreadCrumb(this.$route);
-    //初始化左侧菜单
+    // 初始化左侧菜单
     this.initSideMenu();
     const { name, params, query, meta } = this.$route;
     this.addTag({
@@ -244,48 +243,40 @@ export default {
     ]),
     ...mapActions(['handleLogin']),
 
-    initSideMenu() {
-      //如果是登录跳转过来
+    initSideMenu () {
+      // 如果是登录跳转过来
       if (this.$store.state.user.isUpdatePrivilege) {
         this.$Spin.show();
         this.buildMenuTree();
         this.$refs.sideMenu.updateActiveName(this.$route.name);
         this.$Spin.hide();
       } else {
-        //如果页面刷新，需要重新获取权限
+        // 如果页面刷新，需要重新获取权限
         (async () => {
           this.$Spin.show();
-          let sessionResult = await loginApi.getSession();
-          //设置权限
-          this.$store.commit(
-            'setUserPrivilege',
-            sessionResult.data.privilegeList
-          );
+
           this.buildMenuTree();
-          //刷新以后手动更新左侧菜单打开和选中
+          // 刷新以后手动更新左侧菜单打开和选中
           this.$refs.sideMenu.updateActiveName(this.$route.name);
           this.$Spin.hide();
         })();
       }
     },
-    buildMenuTree() {
+    buildMenuTree () {
       let privilegeTree = [];
       for (const router of routers) {
-        //过滤非菜单
+        // 过滤非菜单
         if (!router.meta.hideInMenu) {
-          //判断是否有权限
-          if (
-            this.$store.state.user.privilegeMenuKeyList.indexOf(router.name) !==
-            -1
-          ) {
+          // 判断是否有权限
+          if (this.$store.state.user.privilegeMenuKeyList) {
             let menu = {
               name: router.name,
               meta: router.meta,
-              icon: _.isUndefined(router.meta.icon) ? '' : router.meta.icon,
+              icon: router.meta.icon,
               children: []
             };
             privilegeTree.push(menu);
-            //存在孩子节点，开始递归
+            // 存在孩子节点，开始递归
             if (router.children && router.children.length > 0) {
               this.recursion(router.children, menu);
             }
@@ -295,14 +286,14 @@ export default {
       this.menuList = privilegeTree;
     },
 
-    recursion(children, parentMenu) {
+    recursion (children, parentMenu) {
       for (const router of children) {
-        //过滤非菜单
+        // 过滤非菜单
         if (!router.meta.hideInMenu) {
           let menu = {
             name: router.name,
             meta: router.meta,
-            icon: _.isUndefined(router.meta.icon) ? '' : router.meta.icon,
+            icon: router.meta.icon,
             children: []
           };
           this.searchList.push({
@@ -310,7 +301,7 @@ export default {
             title: router.meta.title
           });
           parentMenu.children.push(menu);
-          //存在孩子节点，开始递归
+          // 存在孩子节点，开始递归
           if (router.children && router.children.length > 0) {
             this.recursion(router.children, menu);
           }
@@ -318,7 +309,7 @@ export default {
       }
     },
     // 自适应左侧导航宽度
-    setCollapsed() {
+    setCollapsed () {
       let setWidth = () => {
         let width = document.body.offsetWidth;
         if (width < 1340) {
@@ -330,7 +321,7 @@ export default {
       setWidth();
       window.onresize = () => setWidth();
     },
-    turnToPage(route) {
+    turnToPage (route) {
       let { name, params, query } = {};
       if (typeof route === 'string') name = route;
       else {
@@ -348,17 +339,17 @@ export default {
         query
       });
     },
-    handleCollapsedChange(state) {
+    handleCollapsedChange (state) {
       this.collapsed = state;
     },
-    handleCloseTag(res, type, route) {
+    handleCloseTag (res, type, route) {
       let keepRouter = route ? route.name : null;
       if (type !== 'others') {
         if (type === 'all') {
           this.turnToPage(this.$config.homeName);
           this.clearKeepAliveIncludes(this.$config.homeName);
         } else {
-          //如果是关闭单个tag，则从keepAliveIncludes将关闭的那个移除掉
+          // 如果是关闭单个tag，则从keepAliveIncludes将关闭的那个移除掉
           this.deleteKeepAliveIncludes(route.name);
           if (routeEqual(this.$route, route)) {
             this.closeTag(route);
@@ -370,11 +361,11 @@ export default {
       }
       this.setTagNavList(res);
     },
-    handleClick(item) {
+    handleClick (item) {
       this.turnToPage(item);
     },
     // 跳转路由
-    toRoute(name) {
+    toRoute (name) {
       this.$router.push({ name });
       this.searchKeyWord = '';
     }

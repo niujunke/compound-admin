@@ -1,7 +1,4 @@
 import { home } from './module/home';
-import { employee } from './module/employee';
-import { systemSetting } from './module/system-setting';
-import { notice } from './module/notice';
 import { emailSetting } from './module/email';
 import { monitor } from './module/monitor';
 import { userLog } from './module/user-log';
@@ -44,9 +41,6 @@ export const login = {
 export const routers = [
   login,
   ...home,
-  ...employee,
-  ...systemSetting,
-  ...notice,
   ...emailSetting,
   ...userLog,
   ...monitor,
