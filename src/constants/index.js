@@ -1,10 +1,9 @@
-import notice from './notice.js';
+
 import login from './login.js';
-import file from './file.js';
+import active from './active';
 import privilege from './privilege';
 export default {
-  ...notice,
   ...login,
-  ...file,
+  ...active,
   ...privilege
 };

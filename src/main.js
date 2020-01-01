@@ -9,6 +9,8 @@ import i18n from '@/locale';
 import config from '@/config';
 import importDirective from '@/directives';
 import JsonViewer from 'vue-json-viewer';
+import 'viewerjs/dist/viewer.css'
+import Viewer  from 'v-viewer';
 import _ from 'lodash';
 // import { directive as clickOutside } from 'v-click-outside-x';
 import * as vClickOutside from 'v-click-outside-x';
@@ -27,6 +29,7 @@ Vue.use(Enum, { enumInfo });
 Vue.use(iView, {
   i18n: (key, value) => i18n.t(key, value)
 });
+Vue.use(Viewer)
 Vue.use(JsonViewer);
 Vue.use(vClickOutside);
 Number.prototype.toFixed = function (length) {

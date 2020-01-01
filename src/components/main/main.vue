@@ -86,7 +86,6 @@ import ABackTop from './components/a-back-top';
 import SideMenu from './components/side-menu';
 import HeaderBar from './components/header-bar';
 import TagsNav from './components/tags-nav';
-import Notice from './components/notice/notice';
 import User from './components/user';
 import Fullscreen from './components/fullscreen';
 import Language from './components/language';
@@ -102,7 +101,6 @@ export default {
   components: {
     SideMenu,
     HeaderBar,
-    Notice,
     Language,
     TagsNav,
     Fullscreen,

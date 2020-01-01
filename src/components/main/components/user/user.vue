@@ -35,7 +35,6 @@
 <script>
 import './user.less';
 import { mapActions } from 'vuex';
-import { employeeApi } from '@/api/employee';
 import cookie from '@/lib/cookie';
 import { loginApi } from '@/api/login';
 export default {
@@ -47,7 +46,7 @@ export default {
       default: 0
     }
   },
-  data() {
+  data () {
     // 当前登录人信息
     let loginInfo = this.$store.state.user.userLoginInfo;
     return {
@@ -81,7 +80,7 @@ export default {
     };
   },
   methods: {
-    logout() {
+    logout () {
       this.$Spin.show();
       let token = cookie.getToken();
       localStorage.clear();
@@ -90,10 +89,10 @@ export default {
       loginApi.logout(token);
       location.reload();
     },
-    updatePassword() {
+    updatePassword () {
       this.editModal = true;
     },
-    handleClick(name) {
+    handleClick (name) {
       switch (name) {
         case 'logout':
           this.logout();
@@ -103,21 +102,13 @@ export default {
           break;
       }
     },
-    async savePassword() {
-      this.$Spin.show();
-      let result = await employeeApi.updatePwd(this.formValidate);
-      this.$Message.success('修改密码成功');
-      this.$refs['formValidate'].resetFields();
-      this.editModal = false;
-      this.logout();
-    },
-    editSure() {
+
+    editSure () {
       this.$refs['formValidate'].validate(valid => {
         if (valid) {
           if (this.formValidate.passwordAgain !== this.formValidate.loginPwd) {
             return this.$Message.error('两次输入密码不一致，请重新输入！！');
           }
-          this.savePassword();
         }
       });
     }

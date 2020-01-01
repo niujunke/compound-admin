@@ -1,15 +1,7 @@
 import { home } from './module/home';
-import { emailSetting } from './module/email';
-import { monitor } from './module/monitor';
-import { userLog } from './module/user-log';
+import { active } from './module/active';
 import { error } from './module/error';
-import { task } from './module/task';
-import { reload } from './module/reload';
-import { apiDoc } from './module/api-doc';
-import { threeRouter } from './module/three-router';
-import { keepAlive } from './module/keep-alive';
-import { heartBeat } from './module/heart-beat';
-import { file } from './module/file';
+
 
 /**
  *
@@ -41,15 +33,5 @@ export const login = {
 export const routers = [
   login,
   ...home,
-  ...emailSetting,
-  ...userLog,
-  ...monitor,
-  ...error,
-  ...task,
-  ...reload,
-  ...apiDoc,
-  ...threeRouter,
-  ...keepAlive,
-  ...heartBeat,
-  ...file
+  ...active
 ];
