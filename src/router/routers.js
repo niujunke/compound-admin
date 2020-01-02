@@ -2,7 +2,6 @@ import { home } from './module/home';
 import { active } from './module/active';
 import { error } from './module/error';
 
-
 /**
  *
  * iview-admin中meta除了原生参数外可配置的参数:

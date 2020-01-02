@@ -21,17 +21,12 @@
           </div>
         </Col>
       </Row>
-      <Row>
-          <Col span="24">
-             <Button type="primary" @click="backPage">返回</Button>
-          </Col>
-      </Row>
     </Card>
-    <!-- <div class="footerBtn">
-      <div>
-          <Button type="primary">返回</Button>
-      </div>
-    </div> -->
+     <Row class="footerBtn" type="flex" justify="start">
+      <Col>
+        <Button size="large" type="primary" @click="backPage">返回</Button>
+      </Col>
+    </Row>
   </div>
 </template>
 

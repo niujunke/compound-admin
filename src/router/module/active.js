@@ -23,7 +23,7 @@ export const active = [
         name: 'MessageDetail',
         meta: {
           title: '留言详情',
-          hideInMenu:true
+          hideInMenu: true
         },
         component: () => import('@/views/active/message-detail.vue')
       },

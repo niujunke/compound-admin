@@ -21,7 +21,7 @@ export const home = [
           access: true,
           noKeepAlive: true
         },
-        component: () => import('@/views/home')
+        component: () => import('@/views/active/message-list.vue')
       }
     ]
   }

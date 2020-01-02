@@ -48,7 +48,6 @@ Router.prototype.closeCurrentPageAndPush = function (pushParam) {
 };
 let storeSelf = store;
 router.beforeEach((to, from, next) => {
-  console.log(to);
   iView.LoadingBar.start();
   const token = cookie.getToken();
   if (!token && to.name !== LOGIN_PAGE_NAME) {
