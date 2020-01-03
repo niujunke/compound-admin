@@ -90,7 +90,7 @@ export default {
                     height: '50px'
                   },
                   domProps: {
-                    src: `data:image/jpg;base64,${params.row.mergeImage}`
+                    src: params.row.mergeImage
                   }
                 })
               ]
