@@ -13,7 +13,7 @@ const productionGzipExtensions = ['js', 'css'];
 // 例如：https://www.foobar.com/my-app/
 // 需要将它改为'/my-app/'
 // iview-admin线上演示打包路径： https://file.iviewui.com-dist/
-const publicPath = process.env.NODE_ENV === 'production' ? '/' : '/';
+const publicPath = process.env.NODE_ENV === 'production' ? './' : '/';
 const lintOnSave = process.env.NODE_ENV === 'production';
 
 module.exports = {
